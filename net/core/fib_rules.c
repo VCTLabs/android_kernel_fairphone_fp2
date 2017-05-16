@@ -13,6 +13,7 @@
 #include <linux/slab.h>
 #include <linux/list.h>
 #include <linux/module.h>
+#include <linux/uidgid.h>
 #include <net/net_namespace.h>
 #include <net/sock.h>
 #include <net/fib_rules.h>
