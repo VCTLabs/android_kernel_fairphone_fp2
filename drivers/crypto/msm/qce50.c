@@ -4752,13 +4752,15 @@ int qce_ablk_cipher_req(void *handle, struct qce_req *c_req)
 				CRYPTO_RESULT_DUMP_SIZE,
 				&pce_dev->ce_sps.out_transfer))
 			goto bad;
+
 		_qce_set_flag(&pce_dev->ce_sps.out_transfer,
 							SPS_IOVEC_FLAG_INT);
 	}
 	rc = _qce_sps_transfer(pce_dev);
 	if (rc)
 		goto bad;
-		return 0;
+
+	return 0;
 bad:
 	if (areq->src != areq->dst) {
 		if (pce_dev->dst_nents) {

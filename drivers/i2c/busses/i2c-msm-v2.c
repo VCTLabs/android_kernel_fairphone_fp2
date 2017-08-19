@@ -3799,7 +3799,6 @@ DEFINE_SIMPLE_ATTRIBUTE(i2c_msm_dbgfs_do_bus_clear_fops,
 			i2c_msm_dbgfs_do_bus_clear,
 			"0x%llx");
 
-static const umode_t I2C_MSM_DFS_MD_R  = S_IRUSR | S_IRGRP;
 static const umode_t I2C_MSM_DFS_MD_W    = S_IWUSR | S_IWGRP;
 static const umode_t I2C_MSM_DFS_MD_RW = S_IRUSR | S_IRGRP |
 					   S_IWUSR | S_IWGRP;

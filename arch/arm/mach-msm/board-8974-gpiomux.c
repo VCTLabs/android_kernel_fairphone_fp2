@@ -1483,11 +1483,13 @@ void __init msm_8974_init_gpiomux(void)
 			ARRAY_SIZE(msm8974_slimbus_config));
 
 	msm_gpiomux_install(msm_touch_configs, ARRAY_SIZE(msm_touch_configs));
+
 	if (of_board_is_liquid())
 		msm_gpiomux_install(msm_touch_i2cmode_configs,
-					ARRAY_SIZE(msm_touch_i2cmode_configs));
-		msm_gpiomux_install(hap_lvl_shft_config,
-				ARRAY_SIZE(hap_lvl_shft_config));
+				ARRAY_SIZE(msm_touch_i2cmode_configs));
+
+	msm_gpiomux_install(hap_lvl_shft_config,
+			ARRAY_SIZE(hap_lvl_shft_config));
 
 	if (of_board_is_dragonboard() && machine_is_apq8074())
 		msm_gpiomux_install(msm_sensor_configs_dragonboard, \

@@ -82,7 +82,7 @@ static inline void qmp_sphinx_logk_recvfrom(int fd, void __user *ubuf,
 }
 
 static inline void qmp_sphinx_logk_oom_adjust_write(pid_t pid,
-					uid_t uid, int oom_adj)
+					kuid_t uid, int oom_adj)
 {
 	char *buf = NULL;
 	void *blck = NULL;
@@ -95,13 +95,13 @@ static inline void qmp_sphinx_logk_oom_adjust_write(pid_t pid,
 	/*fill the buf*/
 	snprintf(buf, MAX_BUF_SIZE,
 			"-1|kernel|oom_adjust_write|app_uid=%d,app_pid=%d,oom_adj=%d|--end",
-			uid, pid, oom_adj);
+			uid.val, pid, oom_adj);
 
 	qmp_sphinx_logk_kernel_end(blck);
 }
 
-static inline void qmp_sphinx_logk_oom_score_adj_write(pid_t pid, uid_t uid,
-					int oom_adj_score)
+static inline void qmp_sphinx_logk_oom_score_adj_write(pid_t pid,
+					kuid_t uid, int oom_adj_score)
 {
 	char *buf = NULL;
 	void *blck = NULL;
@@ -114,7 +114,7 @@ static inline void qmp_sphinx_logk_oom_score_adj_write(pid_t pid, uid_t uid,
 	/*fill the buf*/
 	snprintf(buf, MAX_BUF_SIZE,
 		"-1|kernel|oom_score_adj_write|app_uid=%d,app_pid=%d,oom_adj=%d|--end",
-		uid, pid, oom_adj_score);
+		uid.val, pid, oom_adj_score);
 
 	qmp_sphinx_logk_kernel_end(blck);
 }
