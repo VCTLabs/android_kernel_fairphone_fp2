@@ -732,6 +732,14 @@ struct msm_isp_event_data32 {
 #define VIDIOC_MSM_ISP_FETCH_ENG_START \
 	_IOWR('V', BASE_VIDIOC_PRIVATE+20, struct msm_vfe_fetch_eng_start)
 
+#ifdef CONFIG_COMPAT
+#define VIDIOC_MSM_ISP_BUF_DONE \
+       _IOWR('V', BASE_VIDIOC_PRIVATE+21, struct msm_isp_event_data32)
+#else
+#define VIDIOC_MSM_ISP_BUF_DONE \
+       _IOWR('V', BASE_VIDIOC_PRIVATE+21, struct msm_isp_event_data)
+#endif
+
 #define VIDIOC_MSM_ISP_DEQUEUE_BUF \
 	_IOWR('V', BASE_VIDIOC_PRIVATE+21, struct msm_isp_qbuf_info)
 
