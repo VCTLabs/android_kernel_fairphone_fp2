@@ -4166,7 +4166,7 @@ static inline int cfs_rq_throttled(struct cfs_rq *cfs_rq)
  * cfs_rq->throttle_count will not be updated yet when this function is called
  * from scheduler_tick()
  */
-static int task_will_be_throttled(struct task_struct *p)
+/* static int task_will_be_throttled(struct task_struct *p)
 {
 	struct sched_entity *se = &p->se;
 	struct cfs_rq *cfs_rq;
@@ -4183,7 +4183,7 @@ static int task_will_be_throttled(struct task_struct *p)
 	}
 
 	return 0;
-}
+} */
 
 /* check whether cfs_rq, or any parent, is throttled */
 static inline int throttled_hierarchy(struct cfs_rq *cfs_rq)
@@ -4263,7 +4263,9 @@ static void throttle_cfs_rq(struct cfs_rq *cfs_rq)
 		if (dequeue)
 			dequeue_entity(qcfs_rq, se, DEQUEUE_SLEEP);
 		qcfs_rq->h_nr_running -= task_delta;
+#ifdef CONFIG_SCHED_HMP
 		dec_throttled_cfs_rq_hmp_stats(&qcfs_rq->hmp_stats, cfs_rq);
+#endif /* CONFIG_SCHED_HMP */
 
 		if (qcfs_rq->load.weight)
 			dequeue = 0;
@@ -4272,7 +4274,9 @@ static void throttle_cfs_rq(struct cfs_rq *cfs_rq)
 	if (!se) {
 		sched_update_nr_prod(cpu_of(rq), task_delta, false);
 		rq->nr_running -= task_delta;
+#ifdef CONFIG_SCHED_HMP
 		dec_throttled_cfs_rq_hmp_stats(&rq->hmp_stats, cfs_rq);
+#endif /* CONFIG_SCHED_HMP */
 	}
 
 	cfs_rq->throttled = 1;
@@ -4298,7 +4302,9 @@ void unthrottle_cfs_rq(struct cfs_rq *cfs_rq)
 	struct sched_entity *se;
 	int enqueue = 1;
 	long task_delta;
+#ifdef CONFIG_SCHED_HMP
 	struct cfs_rq *tcfs_rq = cfs_rq;
+#endif /* CONFIG_SCHED_HMP */
 
 	se = cfs_rq->tg->se[cpu_of(rq_of(cfs_rq))];
 
@@ -4324,7 +4330,9 @@ void unthrottle_cfs_rq(struct cfs_rq *cfs_rq)
 		if (enqueue)
 			enqueue_entity(cfs_rq, se, ENQUEUE_WAKEUP);
 		cfs_rq->h_nr_running += task_delta;
+#ifdef CONFIG_SCHED_HMP
 		inc_throttled_cfs_rq_hmp_stats(&cfs_rq->hmp_stats, tcfs_rq);
+#endif /* CONFIG_SCHED_HMP */
 
 		if (cfs_rq_throttled(cfs_rq))
 			break;
@@ -4333,7 +4341,9 @@ void unthrottle_cfs_rq(struct cfs_rq *cfs_rq)
 	if (!se) {
 		sched_update_nr_prod(cpu_of(rq), task_delta, true);
 		rq->nr_running += task_delta;
+#ifdef CONFIG_SCHED_HMP
 		inc_throttled_cfs_rq_hmp_stats(&rq->hmp_stats, tcfs_rq);
+#endif /* CONFIG_SCHED_HMP */
 	}
 
 	/* determine whether we need to wake up potentially idle cpu */
